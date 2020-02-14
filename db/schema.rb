@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2020_02_10_210035) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "locations", force: :cascade do |t|
     t.string "name"
     t.decimal "lat"
@@ -23,7 +26,7 @@ ActiveRecord::Schema.define(version: 2020_02_10_210035) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
-    t.integer "location_id", null: false
+    t.bigint "location_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["location_id"], name: "index_users_on_location_id"
