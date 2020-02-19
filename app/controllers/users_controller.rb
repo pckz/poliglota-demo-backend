@@ -5,7 +5,9 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    user.location = Location.all.sample
+    location = Location.find_or_create_by(location_params)
+    user.location = location
+    
     if user.save
       render json: UserSerializer.new(user).serialized_json, status: :ok
     else
@@ -16,6 +18,10 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :location_id)
+    params.require(:user).permit(:name, :email)
+  end
+
+  def location_params
+    params.require(:location).permit(:name)
   end
 end
